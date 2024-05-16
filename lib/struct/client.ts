@@ -1,5 +1,5 @@
 import { Client, Collection } from "discord.js";
-import { readdirSync } from "fs";
+import { readdirSync } from "node:fs";
 import { Command, Event } from "./utils";
 import { event as MessageEventPreload} from './preload/messageEvent'
 import { CommandHandlerOptions, EventHandlerOptions, ClientOptions } from './utils/ctypes'
@@ -41,7 +41,7 @@ export class NevClient extends Client {
         }
       });
     } catch (error) {
-      Error(
+      throw new Error(
         "The folder where the commands are located could not be found. [command_handler]"
       );
     }
@@ -60,7 +60,7 @@ export class NevClient extends Client {
         }
       });
     } catch (error) {
-      Error(
+      throw new Error(
         "The folder where the events are located could not be found. [event_handler]"
       );
     }

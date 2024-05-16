@@ -1,14 +1,14 @@
 import { Event } from "../utils";
-import { Message, TextChannel } from "discord.js";
+import { Message } from "discord.js";
 import { Command } from "../utils";
 import { NevClient } from "../client";
 
+const cooldown = new Set()
 export const event: Event = {
     name: 'messageCreate',
     run: async (client: NevClient, message: Message) => {
         const args = message.content.slice(client.ClientOptions.prefix.length).trim().split(/ +/g),
-            cmd = client.commands.get(args.shift()) || client.aliases.get(args.shift()),
-            cooldown = new Set();
+            cmd = client.commands.get(args.shift()) || client.aliases.get(args.shift())
         if (client.CommandOptions.blockBot.valueOf() === true || message.author.bot) return
         if (!message.guild) return
         if (!message.channel.isText()) return
