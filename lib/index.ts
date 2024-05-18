@@ -12,4 +12,4 @@ export * from './struct/func/load'
 
 // Types
 
-export { CommandHandlerOptions, EventHandlerOptions } from './struct/utils/ctypes'
+export { CommandHandlerOptions, EventHandlerOptions, ClientOptions } from './struct/utils/ctypes'

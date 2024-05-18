@@ -1,11 +1,12 @@
 import { Client, Collection } from "discord.js";
 import { readdirSync } from "node:fs";
 import { Command, Event } from "./utils";
-import { event as MessageEventPreload} from './preload/messageEvent'
+import { event as MessageEventPreload } from './preload/messageEvent'
 import { CommandHandlerOptions, EventHandlerOptions, ClientOptions } from './utils/ctypes'
 
 export class NevClient extends Client {
   public commands: Collection<string, Command> = new Collection();
+  public cooldown: Set<string> = new Set()
   public events: Collection<string, Event> = new Collection();
   public aliases: Collection<string, Command> = new Collection();
   public CommandOptions: CommandHandlerOptions
@@ -65,6 +66,9 @@ export class NevClient extends Client {
       );
     }
   }
+  /**
+   * Run client.
+   */
   run() {
     try {
       this.login(this.ClientOptions.token);

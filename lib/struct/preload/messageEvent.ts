@@ -3,7 +3,6 @@ import { Message } from "discord.js";
 import { Command } from "../utils";
 import { NevClient } from "../client";
 
-const cooldown = new Set()
 export const event: Event = {
     name: 'messageCreate',
     run: async (client: NevClient, message: Message) => {
@@ -21,12 +20,12 @@ export const event: Event = {
         if (message.mentions.has(client.user) && message.content.startsWith(client.ClientOptions.prefix + cmd.name)) (cmd as Command).run(client, (message as Message), args);
         if (!message.content.startsWith(client.ClientOptions.prefix)) return
         if (cmd) {
-            if (cooldown.has(message.author.id)) return message.react("⏰");
+            if (client.cooldown.has(message.author.id)) return message.react("⏰");
             (cmd as Command).run(client, (message as Message), args);
             if (!client.CommandOptions.ignoreCooldownUsers.includes(message.author.id)) return;
-            cooldown.add(message.author.id);
+            client.cooldown.add(message.author.id);
             setTimeout(() => {
-                cooldown.delete(message.author.id)
+                client.cooldown.delete(message.author.id)
             }, Number(client.CommandOptions.defaultCooldown));
         }
     }
